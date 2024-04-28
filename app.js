@@ -1,17 +1,34 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-import key from "./db/config.js";
 import authRouter from "./router/api/auth.js";
 import applyPassportStrategy from "./middleware/passport.js";
 import passport from "passport";
 import cors from "cors";
 
 const app = express();
+dotenv.config();
+
+const DATABASE_USERNAME = process.env.MONGO_INITDB_ROOT_USERNAME;
+const DATABASE_PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD;
+const DATABASE_DB = process.env.MONGO_INITDB_DATABASE;
+const DATABASE_HOST = process.env.DATABASE_HOST;
+const DATABASE_PORT = process.env.DATABASE_PORT;
+const DATABASE_COLLECTION = process.env.DATABASE_COLLECTION;
+
+const SERVER_HOST = process.env.SERVER_HOST;
+const SERVER_PORT = process.env.SERVER_PORT;
 
 // Connect to MongoDB
+
+const URI = `mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}`;
+console.log("URI", URI);
 mongoose
-  .connect(key.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to Movie DB");
 
