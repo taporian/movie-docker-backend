@@ -15,6 +15,12 @@ services:
       - server-v-node-modules:/backend/node_modules
     depends_on:
       - database
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${SERVER_PORT}/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   database:
     image: database:1.0.0
