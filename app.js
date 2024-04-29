@@ -41,10 +41,6 @@ mongoose
     // Routes
     app.use("/api", authRouter);
 
-    app.get("/health", (req, res) => {
-      res.status(200).json({ status: "OK" });
-    });
-
     const PORT = process.env.PORT || 3002;
     app.listen(PORT, () => {
       console.log(`Server started on ${PORT}`);
